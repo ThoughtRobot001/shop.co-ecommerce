@@ -12,7 +12,7 @@ import Brands from "../views/Brands.vue";
 import ProductPage from "../views/ProductPage.vue";
 import Cart from "../views/Cart.vue";
 import SignUp from "../views/SignUp.vue";
-import Profile from "../views/profile.vue";
+import Profile from "../views/Profile.vue";
 import AdminDashboard from "../admin/AdminDashboard.vue";
 import Admin from "../admin/Admin.vue";
 import AddProduct from "../admin/AddProduct.vue";

@@ -7,8 +7,8 @@
         <ul>
           <li
             class="px-6 py-2 hover:bg-blue-100 cursor-pointer"
-            :class="{ 'bg-blue-200': activeSection === 'dashboard' }"
-            @click="activeSection = 'dashboard'"
+            :class="{ 'bg-blue-200': activeSection === 'Dashboard' }"
+            @click="activeSection = 'Dashboard'"
           >
             Dashboard
           </li>
@@ -46,7 +46,7 @@
 
       <!-- Conditional Views -->
       <main class="p-6 flex-1 overflow-y-auto">
-        <DashboardView v-if="activeSection === 'dashboard'" />
+        <Dashboard v-if="activeSection === 'Dashboard'" />
         <UsersView v-else-if="activeSection === 'users'" />
         <AddProduct v-else-if="activeSection === 'Add Product'" />
         <SettingsView v-else-if="activeSection === 'settings'" />
@@ -57,7 +57,8 @@
 
 <script setup>
 import { ref } from "vue";
+import Dashboard from "./Dashboard.vue";
 import AddProduct from "./AddProduct.vue";
 
-const activeSection = ref("dashboard");
+const activeSection = ref("Dashboard");
 </script>

@@ -16,6 +16,7 @@ import Profile from "../views/Profile.vue";
 import AdminDashboard from "../admin/AdminDashboard.vue";
 import Admin from "../admin/Admin.vue";
 import AddProduct from "../admin/AddProduct.vue";
+import Dashboard from "../admin/Dashboard.vue";
 
 const routes = [
   {
@@ -98,6 +99,11 @@ const routes = [
         path: "/addproduct",
         name: "AddProduct",
         component: AddProduct,
+      },
+      {
+        path: "/dashboard",
+        name: "Dashboard",
+        component: Dashboard,
       },
     ],
   },

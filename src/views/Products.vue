@@ -38,28 +38,36 @@
           <div class="flex flex-col gap-4 px-4 py-4 text-sm">
             <label class="flex items-center gap-2">
               <input
-                type="checkbox"
+                type="radio"
+                v-model="searchStore.tempCategory"
+                value=""
                 class="form-checkbox h-4 w-4 appearance-none rounded-full border border-black checked:bg-black flex items-center justify-center"
               />
               <span>All Categories</span>
             </label>
             <label class="flex items-center gap-2">
               <input
-                type="checkbox"
+                type="radio"
+                v-model="searchStore.tempCategory"
+                value="Men"
                 class="form-checkbox h-4 w-4 appearance-none rounded-full border border-black checked:bg-black flex items-center justify-center"
               />
               <span>Men</span>
             </label>
             <label class="flex items-center gap-2">
               <input
-                type="checkbox"
+                type="radio"
+                v-model="searchStore.tempCategory"
+                value="Women"
                 class="form-checkbox h-4 w-4 appearance-none rounded-full border border-black checked:bg-black flex items-center justify-center"
               />
               <span>Women</span>
             </label>
             <label class="flex items-center gap-2">
               <input
-                type="checkbox"
+                type="radio"
+                v-model="searchStore.tempCategory"
+                value="accessories"
                 class="form-checkbox h-4 w-4 appearance-none rounded-full border border-black checked:bg-black flex items-center justify-center"
               />
               <span>Accessories</span>
@@ -73,17 +81,23 @@
               <div
                 class="absolute h-2 bg-black rounded"
                 :style="{
-                  left: `${((minPrice - min) / (max - min)) * 100}%`,
-                  width: `${((maxPrice - minPrice) / (max - min)) * 100}%`,
+                  left: `${
+                    ((searchStore.tempMinPrice - 0) / (1000 - 0)) * 100
+                  }%`,
+                  width: `${
+                    ((searchStore.tempMaxPrice - searchStore.tempMinPrice) /
+                      (1000 - 0)) *
+                    100
+                  }%`,
                 }"
               ></div>
 
               <!-- Min Thumb -->
               <input
                 type="range"
-                :min="min"
-                :max="max"
-                v-model="minPrice"
+                :min="0"
+                :max="1000"
+                v-model="searchStore.tempMinPrice"
                 @input="handleMin"
                 class="absolute w-full h-2 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-black"
               />
@@ -91,17 +105,17 @@
               <!-- Max Thumb -->
               <input
                 type="range"
-                :min="min"
-                :max="max"
-                v-model="maxPrice"
+                :min="0"
+                :max="1000"
+                v-model="searchStore.tempMaxPrice"
                 @input="handleMax"
                 class="absolute w-full h-2 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-black"
               />
             </div>
 
             <div class="flex justify-between text-sm text-gray-600">
-              <span>${{ minPrice }}</span>
-              <span>${{ maxPrice }}</span>
+              <span>${{ searchStore.tempMinPrice }}</span>
+              <span>${{ searchStore.tempMaxPrice }}</span>
             </div>
           </div>
 
@@ -120,7 +134,7 @@
                   type="radio"
                   name="color"
                   :value="color.value"
-                  :checked="selectedColor === color.value"
+                  :checked="searchStore.tempSelectedColor === color.value"
                   class="peer sr-only"
                   readonly
                 />
@@ -130,7 +144,7 @@
               </label>
             </div>
             <p class="text-sm mt-2 text-gray-500">
-              Selected: {{ selectedColor || "None" }}
+              Selected: {{ searchStore.tempSelectedColor || "None" }}
             </p>
           </div>
 
@@ -138,65 +152,101 @@
           <div class="flex flex-col gap-4 px-2 py-4 text-sm w-full">
             <h4 class="text-lg text-black font-bold">Size</h4>
             <select
+              v-model="searchStore.tempSelectedSize"
               class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-black"
             >
               <option value="">Select Size</option>
-              <option value="xs">XS</option>
-              <option value="s">S</option>
-              <option value="m">M</option>
-              <option value="l">L</option>
-              <option value="xl">XL</option>
-              <option value="xxl">XXL</option>
-            </select>
-          </div>
-
-          <!-- DRESS STYLE FILTER -->
-          <div class="flex flex-col gap-4 px-2 py-4 text-sm w-full">
-            <h4 class="text-lg text-black font-bold">Dress Style</h4>
-            <select
-              class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-black"
-            >
-              <option value="">Select Style</option>
-              <option value="casual">Casual</option>
-              <option value="formal">Formal</option>
-              <option value="party">Party</option>
-              <option value="gym">Gym</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
             </select>
           </div>
 
           <!-- APPLY FILTERS BUTTON -->
-          <button
-            class="bg-black text-white px-4 py-2 rounded-full w-full btn-animate"
-          >
-            Apply Filters
-          </button>
+          <div class="flex flex-col gap-2">
+            <button
+              @click="applyFilters"
+              class="bg-black text-white px-4 py-2 rounded-full w-full btn-animate"
+            >
+              Apply Filters
+            </button>
+            <button
+              @click="resetAllFilters"
+              class="border border-gray-300 text-gray-700 px-4 py-2 rounded-full w-full hover:bg-gray-100 transition-colors duration-200"
+            >
+              Reset Filters
+            </button>
+          </div>
         </div>
       </div>
       <!-- FILTERS END -->
 
       <!-- PRODUCTS -->
       <div class="w-10/12">
-        <div class="w-full flex flex-row justify-end items-end gap-4">
-          <h4 class="text-lg text-black font-bold">Sort by</h4>
+        <!-- SORT BY FILTER -->
+        <div class="w-full flex flex-row justify-end items-end gap-4 mb-2">
+          <h4 class="text-lg text-black font-bold">Sort by:</h4>
           <div class="flex flex-row gap-2">
             <button
-              class="bg-black text-white px-4 py-2 rounded-full w-full btn-animate"
+              @click="handleSort('price-asc')"
+              :class="[
+                'px-4 py-2 rounded-full w-full btn-animate',
+                searchStore.activeSortBy === 'price-asc'
+                  ? 'bg-black text-white'
+                  : 'bg-gray-100 hover:bg-gray-200',
+              ]"
             >
               Price: Low to High
             </button>
             <button
-              class="bg-black text-white px-4 py-2 rounded-full w-full btn-animate"
+              @click="handleSort('price-desc')"
+              :class="[
+                'px-4 py-2 rounded-full w-full btn-animate',
+                searchStore.activeSortBy === 'price-desc'
+                  ? 'bg-black text-white'
+                  : 'bg-gray-100 hover:bg-gray-200',
+              ]"
             >
               Price: High to Low
             </button>
           </div>
         </div>
+        <!-- SORT BY FILTER-- END -->
+
         <!-- Products Grid -->
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
         >
+          <!-- No Products Found Message -->
+          <div
+            v-if="searchStore.filteredProducts.length === 0"
+            class="col-span-full flex flex-col items-center justify-center py-12"
+          >
+            <box-icon
+              name="search-alt"
+              size="lg"
+              class="text-gray-400 mb-4"
+            ></box-icon>
+            <h3 class="text-2xl font-semibold text-gray-700 mb-2">
+              No Products Found
+            </h3>
+            <p class="text-gray-500 mb-4">
+              Try adjusting your filters or search terms
+            </p>
+            <button
+              @click="resetAllFilters"
+              class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors duration-200"
+            >
+              Reset Filters
+            </button>
+          </div>
+
           <!-- Product Card Template -->
           <router-link
+            v-else
             v-for="product in paginatedProducts"
             :key="product.id"
             :to="'/productpage/' + product.id"
@@ -310,19 +360,15 @@ import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
 import Loader from "../components/Loader.vue";
 import { useLoadingStore } from "../stores/loading";
+import { useSearchStore } from "../stores/searchStore";
 
 const cartStore = useCartStore();
 const loadingStore = useLoadingStore();
-const products = ref([]);
-const minPrice = ref(0);
-const maxPrice = ref(500);
-const min = ref(0);
-const max = ref(1000);
-const selectedColor = ref("");
-const isFilterCollapsed = ref(false);
+const searchStore = useSearchStore();
 const router = useRouter();
 const currentPage = ref(1);
 const itemsPerPage = 8;
+const isFilterCollapsed = ref(false);
 
 const colors = [
   { value: "Black", class: "bg-black" },
@@ -339,19 +385,20 @@ const colors = [
   { value: "Orange", class: "bg-orange-500" },
 ];
 
-function handleSelect(color) {
-  selectedColor.value = selectedColor.value === color ? null : color;
-}
+const handleSelect = (color) => {
+  searchStore.tempSelectedColor =
+    searchStore.tempSelectedColor === color ? "" : color;
+};
 
 const handleMin = () => {
-  if (minPrice.value > maxPrice.value) {
-    minPrice.value = maxPrice.value;
+  if (searchStore.tempMinPrice > searchStore.tempMaxPrice) {
+    searchStore.tempMinPrice = searchStore.tempMaxPrice;
   }
 };
 
 const handleMax = () => {
-  if (maxPrice.value < minPrice.value) {
-    maxPrice.value = minPrice.value;
+  if (searchStore.tempMaxPrice < searchStore.tempMinPrice) {
+    searchStore.tempMaxPrice = searchStore.tempMinPrice;
   }
 };
 
@@ -359,10 +406,20 @@ const fetchProducts = async () => {
   try {
     loadingStore.startLoading();
     const querySnapshot = await getDocs(collection(db, "products"));
-    products.value = querySnapshot.docs.map((doc) => ({
+    searchStore.products = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
+    // Debug log to check all products and their categories
+    console.log(
+      "All products:",
+      searchStore.products.map((p) => ({
+        id: p.id,
+        name: p.name,
+        category: p.category,
+        price: p.price,
+      }))
+    );
   } catch (error) {
     console.error("Error fetching products:", error);
     toast.error("Failed to load products");
@@ -377,13 +434,13 @@ const AddToCart = (product) => {
 
 // Computed properties for pagination
 const totalPages = computed(() =>
-  Math.ceil(products.value.length / itemsPerPage)
+  Math.ceil(searchStore.filteredProducts.length / itemsPerPage)
 );
 
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  return products.value.slice(start, end);
+  return searchStore.filteredProducts.slice(start, end);
 });
 
 const goToPage = (page) => {
@@ -397,7 +454,43 @@ const goToPage = (page) => {
   }
 };
 
+const applyFilters = () => {
+  searchStore.applyFilters();
+  // Debug log to check active category and filtered results
+  console.log("Active category:", searchStore.activeCategory);
+  console.log(
+    "All products categories:",
+    searchStore.products.map((p) => p.category)
+  );
+  console.log(
+    "Filtered products:",
+    searchStore.filteredProducts.map((p) => ({
+      id: p.id,
+      name: p.name,
+      category: p.category,
+    }))
+  );
+  // Reset to first page when applying new filters
+  currentPage.value = 1;
+};
+
+const handleSort = (sortType) => {
+  searchStore.tempSortBy = sortType;
+  searchStore.applyFilters();
+};
+
+const resetAllFilters = () => {
+  searchStore.resetFilters();
+  currentPage.value = 1;
+  // Reset the filter collapse state if needed
+  isFilterCollapsed.value = true;
+};
+
 onMounted(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   fetchProducts();
 });
 </script>

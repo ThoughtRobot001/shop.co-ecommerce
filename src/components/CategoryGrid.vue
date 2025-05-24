@@ -5,7 +5,8 @@
     >
       <h2 class="text-5xl font-black text-center">Browse By Dress Style</h2>
       <div class="grid grid-cols-1 md:grid-cols-5 gap-8 mt-10">
-        <div
+        <router-link
+          to="/products"
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-2"
         >
           <img
@@ -16,20 +17,22 @@
           <div class="absolute top-8 left-8 text-black text-4xl font-black">
             Casual
           </div>
-        </div>
-        <div
+        </router-link>
+        <router-link
+          to="/products"
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-3"
         >
           <img
             src="../assets/images/formal.png"
             alt="Women's Fashion"
-            class="w-full h-[300px] object-cover transition duration-300 group-hover:scale-110"
+            class="wfull h-[300px] object-cover transition duration-300 group-hover:scale-110"
           />
           <div class="absolute top-8 left-8 text-black text-4xl font-black">
             Formal
           </div>
-        </div>
-        <div
+        </router-link>
+        <router-link
+          to="/products"
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-3"
         >
           <img
@@ -40,8 +43,9 @@
           <div class="absolute top-8 left-8 text-black text-4xl font-black">
             Party
           </div>
-        </div>
-        <div
+        </router-link>
+        <router-link
+          to="/products"
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-2"
         >
           <img
@@ -52,7 +56,7 @@
           <div class="absolute top-8 left-8 text-black text-4xl font-black">
             Gym
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </section>

@@ -42,6 +42,7 @@ export const useCartStore = defineStore("cart", {
       if (index > -1) {
         this.items.splice(index, 1);
       }
+      this.saveCart();
     },
     updateQuantity(productId, quantity, selectedSize, selectedColor) {
       const item = this.items.find(

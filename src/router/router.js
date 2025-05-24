@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import AdminLayout from "../AdminLayout.vue";
 import PublicLayout from "../PublicLayout.vue";
+import NotFound from "../views/NotFound.vue";
+import ComingSoon from "../views/ComingSoon.vue";
 
 import Home from "../views/Home.vue";
 import Products from "../views/Products.vue";
@@ -78,6 +80,11 @@ const routes = [
         name: "Profile",
         component: Profile,
       },
+      {
+        path: "/coming-soon",
+        name: "ComingSoon",
+        component: ComingSoon,
+      },
     ],
   },
 
@@ -106,6 +113,12 @@ const routes = [
         component: Dashboard,
       },
     ],
+  },
+  // 404 route - must be last
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: NotFound,
   },
 ];
 

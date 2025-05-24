@@ -15,14 +15,25 @@
 
       <!-- Main Content -->
       <div>
-        <h2 class="mt-6 text-4xl font-extrabold text-gray-900">
-          New Arrivals Coming Soon
-        </h2>
+        <h2 class="mt-6 text-4xl font-extrabold text-gray-900">Coming Soon</h2>
         <p class="mt-2 text-lg text-gray-600">
           We're working hard to bring you something amazing. Stay tuned!
         </p>
       </div>
 
+      <!-- Progress Bar -->
+      <!-- <div class="mt-8">
+        <div class="relative pt-1">
+          <div
+            class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200"
+          >
+            <div
+              class="progress-bar shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-black"
+              :style="{ width: progress + '%' }"
+            ></div>
+          </div>
+        </div>
+      </div> -->
 
       <!-- Action Buttons -->
       <div class="mt-8 space-y-4">
@@ -94,3 +105,8 @@ onMounted(() => {
 });
 </script>
 
+<style scoped>
+/* .progress-bar {
+  transition: width 0.5s ease-in-out;
+} */
+</style>

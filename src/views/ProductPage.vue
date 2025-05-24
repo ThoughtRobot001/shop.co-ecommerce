@@ -112,22 +112,38 @@
         <div>
           <h3 class="text-lg font-medium mb-3">Color</h3>
           <div class="flex gap-3">
-            <button
-              v-for="(color, index) in product.colors"
-              :key="index"
-              class="w-10 h-10 rounded-full border-2 transition-all flex items-center justify-center"
-              :class="
-                selectedColor === color
-                  ? 'border-black'
-                  : 'border-gray-300 hover:border-black'
-              "
-              @click="selectedColor = color"
-            >
-              <div
-                class="w-8 h-8 rounded-full"
-                :style="{ backgroundColor: color }"
-              ></div>
-            </button>
+            <!-- If colors are available -->
+            <template v-if="product.colors && product.colors.length">
+              <button
+                v-for="(color, index) in product.colors"
+                :key="index"
+                class="w-10 h-10 rounded-full border-2 transition-all flex items-center justify-center"
+                :class="
+                  selectedColor === color
+                    ? 'border-black'
+                    : 'border-gray-300 hover:border-black'
+                "
+                @click="selectedColor = color"
+              >
+                <div
+                  class="w-8 h-8 rounded-full"
+                  :style="{ backgroundColor: color }"
+                ></div>
+              </button>
+            </template>
+
+            <!-- If no colors, fallback to showing pattern (main image) -->
+            <template v-else>
+              <button
+                class="w-10 h-10 rounded-full border-2 border-gray-300 hover:border-black transition-all flex items-center justify-center overflow-hidden"
+                @click="selectedColor = 'pattern'"
+              >
+                <div
+                  class="w-[200px] h-[200px] rounded-full bg-cover bg-center"
+                  :style="{ backgroundImage: `url(${product.imgUrl})` }"
+                ></div>
+              </button>
+            </template>
           </div>
         </div>
 
@@ -272,8 +288,9 @@ window.scrollTo({
 
 onMounted(() => {
   fetchProduct().then(() => {
-    selectedColor.value = product.value?.colors[0];
-    selectedSize.value = product.value?.sizes[0];
+    // Set default color if available, otherwise set a fallback
+    selectedColor.value = product.value?.colors?.[0] || "pattern";
+    selectedSize.value = product.value?.sizes?.[0] || null;
   });
 });
 

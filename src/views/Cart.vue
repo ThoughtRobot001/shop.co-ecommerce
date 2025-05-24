@@ -1,7 +1,26 @@
 <template>
   <section class="max-w-7xl mx-auto py-8 px-4">
     <Loader :loading="loadingStore.isLoading" />
-    <h1 class="text-3xl font-bold mb-8">Shopping Cart</h1>
+    <div class="flex flex-row gap-2">
+      <h4 class="text-normal font-medium mb-4 text-gray-500 cursor-pointer">
+        Home
+      </h4>
+      <h4 class="text-normal font-medium mb-4 text-gray-500 cursor-pointer">
+        >
+      </h4>
+      <router-link
+        to="/products"
+        class="text-normal font-medium mb-4 text-gray-500 cursor-pointer"
+      >
+        Products
+      </router-link>
+      <h4 class="text-normal font-medium mb-4 text-gray-500 cursor-pointer">
+        >
+      </h4>
+      <h4 class="text-normal font-medium mb-4 text-gray-500 cursor-pointer">
+        Shopping Cart
+      </h4>
+    </div>
 
     <div v-if="cartStore.items.length === 0" class="text-center py-12">
       <box-icon name="cart" size="lg" class="mb-4"></box-icon>
@@ -166,6 +185,7 @@ const updateQuantity = (productId, quantity, selectedSize, selectedColor) => {
 const removeItem = (productId, selectedSize, selectedColor) => {
   cartStore.removeFromCart(productId, selectedSize, selectedColor);
   toast.success("Item removed from cart");
+  console.log(cartStore.items);
 };
 
 const handleCheckout = async () => {

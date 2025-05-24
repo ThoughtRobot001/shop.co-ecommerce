@@ -62,6 +62,7 @@
           <!-- Search Bar -->
           <div class="relative hidden lg:block max-w-[500px] xl:w-[500px]">
             <input
+              v-model="searchStore.query"
               class="search-bar rounded-full py-2 md:py-3 pl-12 pr-4 w-full bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 transition-colors duration-200"
               type="text"
               placeholder="Search for products..."
@@ -93,6 +94,7 @@
               </button>
               <div class="relative flex-grow">
                 <input
+                  v-model="searchStore.query"
                   class="search-bar rounded-full py-3 pl-12 pr-4 w-full bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 transition-colors duration-200"
                   type="text"
                   placeholder="Search for products..."
@@ -125,9 +127,20 @@
 
             <button
               @click="handleUserLoginClick"
-              class="flex items-center hover:opacity-70 transition-opacity duration-200"
+              class="relative flex items-center hover:opacity-70 transition-opacity duration-200"
             >
               <box-icon name="user-circle" class="text-2xl"></box-icon>
+              <span
+                v-if="user"
+                class="absolute -bottom-[3px] -right-[3px] bg-green-500 rounded-full w-[13px] h-[13px] flex items-center justify-center"
+              >
+                <box-icon
+                  class="absolute transform -translate-x-(-1/2) -translate-y-2/5 z-100"
+                  name="check"
+                  size="xs"
+                  color="white"
+                ></box-icon>
+              </span>
             </button>
           </div>
         </div>
@@ -198,11 +211,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 import { useCartStore } from "../stores/cart";
 import { useRouter } from "vue-router";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebase";
+import { useSearchStore } from "../stores/searchStore";
 
 const isMobileMenuOpen = ref(false);
 const menuRef = ref(null);
@@ -210,6 +224,17 @@ const cartStore = useCartStore();
 const isSearchOpen = ref(false);
 const router = useRouter();
 const user = ref(null);
+const searchStore = useSearchStore();
+
+// Watch for changes in the search query
+watch(
+  () => searchStore.query,
+  (newQuery) => {
+    if (newQuery) {
+      router.push("/products");
+    }
+  }
+);
 
 onAuthStateChanged(auth, (currentUser) => {
   user.value = currentUser;

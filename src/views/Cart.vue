@@ -149,7 +149,7 @@
             </div>
 
             <button
-              class="w-1/4 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors btn-animate"
+              class="w-1/4 h-13 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors btn-animate"
             >
               Apply
             </button>
@@ -171,6 +171,7 @@
 import { useCartStore } from "../stores/cart";
 import { toast } from "vue3-toastify";
 import { useLoadingStore } from "../stores/loading";
+import { onMounted } from "vue";
 
 const cartStore = useCartStore();
 const loadingStore = useLoadingStore();
@@ -208,4 +209,11 @@ const checkout = () => {
   }
   handleCheckout();
 };
+
+onMounted(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+});
 </script>

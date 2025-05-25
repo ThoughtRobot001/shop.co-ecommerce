@@ -187,8 +187,8 @@
       <!-- PRODUCTS -->
       <div class="w-10/12">
         <!-- SORT BY FILTER -->
-        <div class="w-full flex flex-row justify-end items-end gap-4 mb-2">
-          <h4 class="text-lg text-black font-bold">Sort by:</h4>
+        <div class="w-full flex flex-row justify-end items-center gap-4 mb-2">
+          <h4 class="text-sm md:text-lg text-black font-bold">Sort by:</h4>
           <div class="flex flex-row gap-2">
             <button
               @click="handleSort('price-asc')"
@@ -198,6 +198,7 @@
                   ? 'bg-black text-white'
                   : 'bg-gray-100 hover:bg-gray-200',
               ]"
+              class="text-sm md:text-lg"
             >
               Price: Low to High
             </button>
@@ -209,6 +210,7 @@
                   ? 'bg-black text-white'
                   : 'bg-gray-100 hover:bg-gray-200',
               ]"
+              class="text-sm md:text-lg"
             >
               Price: High to Low
             </button>
@@ -218,7 +220,7 @@
 
         <!-- Products Grid -->
         <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"
         >
           <!-- No Products Found Message -->
           <div
@@ -250,9 +252,9 @@
             v-for="product in paginatedProducts"
             :key="product.id"
             :to="'/productpage/' + product.id"
-            class="group"
+            class="mb-12 group border border-gray-200 rounded-lg"
           >
-            <div class="relative overflow-hidden rounded-lg">
+            <div class="relative overflow-hidden rounded-lg mb-0">
               <img
                 :src="product.imgUrl"
                 alt="Product"
@@ -267,7 +269,7 @@
             </div>
             <div class="mb-4">
               <div class="flex flex-col gap-2 items-center">
-                <h3 class="mt-4 font-semibold">{{ product.name }}</h3>
+                <h3 class="font-semibold">{{ product.name }}</h3>
                 <div class="flex gap-2 items-center">
                   <div>
                     <box-icon
@@ -312,6 +314,7 @@
             </div>
           </router-link>
         </div>
+
         <!-- Pagination -->
         <div class="flex justify-center mt-12">
           <div class="flex gap-2">
@@ -472,6 +475,11 @@ const applyFilters = () => {
   );
   // Reset to first page when applying new filters
   currentPage.value = 1;
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
 };
 
 const handleSort = (sortType) => {

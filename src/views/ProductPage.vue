@@ -21,11 +21,12 @@
         {{ product.name }}
       </h4>
     </div>
+
     <!-- Product Image Gallery -->
     <div
       class="w-10/12 mx-auto my-4 flex flex-col md:flex-row gap-12 items-start justify-center"
     >
-      <div class="w-full md:w-5/10 flex flex-row px-4 md:px-0">
+      <div class="w-full md:w-5/10 flex flex-col md:flex-row px-4 md:px-0">
         <swiper
           :style="{
             '--swiper-navigation-color': '#000',
@@ -39,7 +40,7 @@
           :freeMode="true"
           :thumbs="{ swiper: thumbsSwiper }"
           :modules="[FreeMode, Navigation, Thumbs]"
-          class="w-9/12 rounded-lg mb-4 order-2 main-swiper"
+          class="w-full md:w-9/12 rounded-lg mb-4 order-1 md:order-2 main-swiper"
         >
           <swiper-slide>
             <img
@@ -63,14 +64,14 @@
           :slidesPerView="4"
           :watchSlidesProgress="true"
           :modules="[FreeMode, Navigation, Thumbs]"
-          :direction="'vertical'"
+          :direction="screenWidth < 760 ? 'horizontal' : 'vertical'"
           :style="{
             '--swiper-navigation-color': '#000',
             '--swiper-navigation-size': '20px',
             '--swiper-navigation-sides-offset': '0px',
           }"
           :navigation="true"
-          class="w-2/12 thumbs-swiper h-[450px] order-1"
+          class="w-full md:w-2/12 thumbs-swiper lg:h-[450px] order-2 md:order-1"
         >
           <swiper-slide class="flex flex-col items-center">
             <img
@@ -186,7 +187,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -208,6 +209,12 @@ const selectedColor = ref(null);
 const selectedSize = ref(null);
 const cartStore = useCartStore();
 const loadingStore = useLoadingStore();
+const screenWidth = ref(window.innerWidth);
+
+// Add window resize listener
+const handleResize = () => {
+  screenWidth.value = window.innerWidth;
+};
 
 const setThumbsSwiper = (swiper) => {
   thumbsSwiper.value = swiper;
@@ -280,18 +287,22 @@ const AddToCart = () => {
   });
 };
 
-// Scroll to top of the page
-window.scrollTo({
-  top: 0,
-  behavior: "smooth",
-});
-
 onMounted(() => {
+  window.addEventListener("resize", handleResize);
+  // Scroll to top of the page
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   fetchProduct().then(() => {
     // Set default color if available, otherwise set a fallback
     selectedColor.value = product.value?.colors?.[0] || "pattern";
     selectedSize.value = product.value?.sizes?.[0] || null;
   });
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", handleResize);
 });
 
 console.log(selectedColor.value);

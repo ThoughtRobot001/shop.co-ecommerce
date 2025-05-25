@@ -77,6 +77,7 @@
           <!-- Mobile Search Icon -->
           <button
             @click="toggleSearch"
+            data-search-button
             class="lg:hidden cursor-pointer flex items-center hover:opacity-70 transition-opacity duration-200"
           >
             <box-icon name="search" color="black"></box-icon>
@@ -85,8 +86,9 @@
           <!-- Mobile Search Input -->
           <div
             v-if="isSearchOpen"
-            class="fixed top-0 left-0 w-full h-full bg-white z-50 transform transition-transform duration-300"
-            :class="isSearchOpen ? 'translate-y-0' : '-translate-y-full'"
+            class="fixed top-0 left-0 w-full h-2/12 bg-white z-50 transform transition-transform duration-300"
+            :class="isSearchOpen ? 'translate-y-0' : '-translate-y-2/12'"
+            ref="searchContainer"
           >
             <div class="p-4 flex items-center gap-4">
               <button @click="toggleSearch" class="hover:opacity-70">
@@ -225,6 +227,7 @@ const isSearchOpen = ref(false);
 const router = useRouter();
 const user = ref(null);
 const searchStore = useSearchStore();
+const searchContainer = ref(null);
 
 // Watch for changes in the search query
 watch(
@@ -253,18 +256,31 @@ const toggleMobileMenu = () => {
 };
 
 const handleClickOutside = (event) => {
-  // Check if the click target is not the menu toggle button
-  const isMenuButton =
-    event.target.closest("[data-menu-button]") ||
-    event.target.closest("button");
-  if (isMenuButton) return;
-
+  // Close mobile menu
   if (
     isMobileMenuOpen.value &&
     menuRef.value &&
     !menuRef.value.contains(event.target)
   ) {
     isMobileMenuOpen.value = false;
+    document.body.style.overflow = "";
+  }
+
+  // Close search input
+  if (
+    isSearchOpen.value &&
+    searchContainer.value &&
+    !searchContainer.value.contains(event.target) &&
+    !event.target.closest("button[data-search-button]")
+  ) {
+    isSearchOpen.value = false;
+    document.body.style.overflow = "";
+  }
+};
+
+const handleScrollClose = () => {
+  if (isSearchOpen.value) {
+    isSearchOpen.value = false;
     document.body.style.overflow = "";
   }
 };
@@ -279,9 +295,13 @@ const handleUserLoginClick = () => {
 
 onMounted(() => {
   document.addEventListener("click", handleClickOutside, true);
+  document.addEventListener("touchstart", handleClickOutside, true); // for mobile touch
+  window.addEventListener("scroll", handleScrollClose, true); // for scrolling
 });
 
 onUnmounted(() => {
   document.removeEventListener("click", handleClickOutside, true);
+  document.removeEventListener("touchstart", handleClickOutside, true);
+  window.removeEventListener("scroll", handleScrollClose, true);
 });
 </script>

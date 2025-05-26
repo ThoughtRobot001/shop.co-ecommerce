@@ -44,9 +44,7 @@
               :to="'/productpage/' + product.id"
               class="group block border border-gray-200 rounded-lg"
             >
-              <div
-                class="relative overflow-hiddenh-[250px] lg:h-auto"
-              >
+              <div class="relative overflow-hidden h-[250px] lg:h-auto">
                 <img
                   :src="product.imgUrl"
                   alt="Product"

@@ -2,9 +2,12 @@
   <section class="max-w-7xl mx-auto py-8 px-4">
     <Loader :loading="loadingStore.isLoading" />
     <div class="flex flex-row gap-2">
-      <h4 class="text-normal font-medium mb-4 text-gray-500 cursor-pointer">
+      <router-link
+        to="/"
+        class="text-normal font-medium mb-8 text-gray-500 cursor-pointer link-animate"
+      >
         Home
-      </h4>
+      </router-link>
       <h4 class="text-normal font-medium mb-4 text-gray-500 cursor-pointer">
         >
       </h4>

@@ -1,10 +1,13 @@
 <template>
-  <div v-if="product" class="max-w-7xl mx-auto py-4">
+  <div v-if="product" class="max-w-7xl mx-auto py-4 px-4">
     <Loader :loading="loadingStore.isLoading" />
     <div class="flex flex-row gap-2">
-      <h4 class="text-normal font-medium mb-4 text-gray-500 cursor-pointer">
+      <router-link
+        to="/"
+        class="text-normal font-medium mb-8 text-gray-500 cursor-pointer link-animate"
+      >
         Home
-      </h4>
+      </router-link>
       <h4 class="text-normal font-medium mb-4 text-gray-500 cursor-pointer">
         >
       </h4>
@@ -64,19 +67,19 @@
           :slidesPerView="4"
           :watchSlidesProgress="true"
           :modules="[FreeMode, Navigation, Thumbs]"
-          :direction="screenWidth < 760 ? 'horizontal' : 'vertical'"
+          :direction="screenWidth < 768 ? 'horizontal' : 'vertical'"
           :style="{
             '--swiper-navigation-color': '#000',
             '--swiper-navigation-size': '20px',
             '--swiper-navigation-sides-offset': '0px',
           }"
           :navigation="true"
-          class="w-full md:w-2/12 thumbs-swiper lg:h-[450px] order-2 md:order-1"
+          class="w-full md:w-2/12 thumbs-swiper md:h-[320px] lg:h-[450px] order-2 md:order-1"
         >
           <swiper-slide class="flex flex-col items-center">
             <img
               :src="product.imgUrl"
-              class="w-full h-24 object-cover rounded-lg cursor-pointer"
+              class="w-full h-24 md:h-19 lg:h-24 object-cover rounded-lg cursor-pointer"
             />
           </swiper-slide>
 
@@ -86,7 +89,7 @@
           >
             <img
               :src="img"
-              class="w-full h-24 object-cover rounded-lg cursor-pointer"
+              class="w-full h-24 md:h-19 lg:h-24 object-cover rounded-lg cursor-pointer"
             />
           </swiper-slide>
         </swiper>
@@ -311,7 +314,7 @@ console.log(selectedColor.value);
 <style scoped>
 .main-swiper :deep(.swiper-button-next),
 .main-swiper :deep(.swiper-button-prev) {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   width: 40px;
   height: 40px;
   border-radius: 50%;

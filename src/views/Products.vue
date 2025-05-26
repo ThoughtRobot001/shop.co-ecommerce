@@ -1,7 +1,7 @@
 <template>
   <section class="max-w-7xl mx-auto py-8">
     <Loader :loading="isLoading" />
-    <div class="flex flex-row gap-2">
+    <div class="flex flex-row gap-2 ml-10 lg:ml-0">
       <router-link
         to="/"
         class="text-normal font-medium mb-8 text-gray-500 cursor-pointer link-animate"
@@ -17,24 +17,24 @@
     </div>
 
     <div
-      class="flex flex-col md:flex-row items-center md:items-start w-full gap-2"
+      class="flex flex-col md:flex-row items-center justify-center md:items-start w-full gap-2"
     >
       <!-- Filters and Sort Section -->
       <div
-        class="flex flex-row md:flex-col justify-start gap-4 items-center mb-6 w-full md:w-2/12 border border-gray-200 rounded-[20px] p-4 flex-wrap md:flex-nowrap"
+        class="flex flex-row md:flex-col justify-start gap-4 items-center mb-6 w-10/12 md:w-3/12 lg:w-2/12 border border-gray-200 rounded-[20px] p-4 flex-wrap md:flex-nowrap"
       >
         <div
           class="flex flex-row justify-between items-center w-full cursor-pointer"
           @click="isFilterCollapsed = !isFilterCollapsed"
         >
-          <p class="text-[20px] font-medium">Filter</p>
+          <p class="text-[20px] md:text-base lg:text-lg font-medium">Filter</p>
           <box-icon
             :name="isFilterCollapsed ? 'chevron-up' : 'chevron-down'"
             class="text-gray-500"
           ></box-icon>
         </div>
 
-        <div v-show="isFilterCollapsed" class="w-full">
+        <div v-show="filterControl" class="w-full">
           <div class="flex flex-col gap-4 px-4 py-4 text-sm">
             <label class="flex items-center gap-2">
               <input
@@ -185,10 +185,12 @@
       <!-- FILTERS END -->
 
       <!-- PRODUCTS -->
-      <div class="w-10/12">
+      <div class="w-10/12 md:w-8/12 lg:w-10/12">
         <!-- SORT BY FILTER -->
         <div class="w-full flex flex-row justify-end items-center gap-4 mb-2">
-          <h4 class="text-sm md:text-lg text-black font-bold">Sort by:</h4>
+          <h4 class="text-sm md:text-base lg:text-lg text-black font-bold">
+            Sort by:
+          </h4>
           <div class="flex flex-row gap-2">
             <button
               @click="handleSort('price-asc')"
@@ -198,7 +200,7 @@
                   ? 'bg-black text-white'
                   : 'bg-gray-100 hover:bg-gray-200',
               ]"
-              class="text-sm md:text-lg"
+              class="text-sm md:text-base lg:text-lg"
             >
               Price: Low to High
             </button>
@@ -210,7 +212,7 @@
                   ? 'bg-black text-white'
                   : 'bg-gray-100 hover:bg-gray-200',
               ]"
-              class="text-sm md:text-lg"
+              class="text-sm md:text-base lg:text-lg"
             >
               Price: High to Low
             </button>
@@ -219,9 +221,7 @@
         <!-- SORT BY FILTER-- END -->
 
         <!-- Products Grid -->
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"
-        >
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
           <!-- No Products Found Message -->
           <div
             v-if="searchStore.filteredProducts.length === 0"
@@ -355,7 +355,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { useCartStore } from "../stores/cart";
@@ -371,7 +371,18 @@ const searchStore = useSearchStore();
 const router = useRouter();
 const currentPage = ref(1);
 const itemsPerPage = 8;
-const isFilterCollapsed = ref(false);
+const isFilterCollapsed = ref(window.innerWidth >= 768);
+const screenWidth = ref(window.innerWidth);
+
+const handleResize = () => {
+  screenWidth.value = window.innerWidth;
+  // Update filter state based on screen size
+  isFilterCollapsed.value = window.innerWidth < 768;
+};
+
+const filterControl = computed(() => {
+  return !isFilterCollapsed.value;
+});
 
 const colors = [
   { value: "Black", class: "bg-black" },
@@ -495,11 +506,17 @@ const resetAllFilters = () => {
 };
 
 onMounted(() => {
+  window.addEventListener("resize", handleResize);
+  handleResize();
   window.scrollTo({
     top: 0,
     behavior: "smooth",
   });
   fetchProducts();
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", handleResize);
 });
 </script>
 

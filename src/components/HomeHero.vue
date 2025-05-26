@@ -5,7 +5,7 @@
     >
       <!-- Left Content -->
       <div
-        class="w-full md:w-1/2 flex flex-col gap-5 justify-center items-center md:items-start mb-8 md:mb-0"
+        class="w-full md:w-1/2 flex flex-col gap-5 justify-center items-center md:ml-3 md:items-start mb-8 md:mb-0"
       >
         <div class="flex flex-col gap-5">
           <h1

@@ -10,7 +10,7 @@
             <box-icon name="user" color="white" size="lg"></box-icon>
           </div>
   <div>
-            <h1 class="text-3xl font-bold mb-1">
+            <h1 class="text-2xl md:text-3xl font-bold mb-1">
               Welcome, {{ user?.displayName || "User" }}
             </h1>
             <p class="text-gray-600">{{ user?.email }}</p>

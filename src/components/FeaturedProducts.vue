@@ -95,14 +95,14 @@
                     </div>
                     <div class="text-gray-500">5/5</div>
                   </div>
-                  <div class="flex items-center gap-2 flex-wrap">
+                  <div class="flex items-center justify-center gap-2 flex-wrap">
                     <p class="mt-1 text-sm md:text-base font-bold">
-                      ${{ product.price }}
+                      ${{ product.price.toFixed(2) }}
                     </p>
                     <p
                       class="mt-1 text-sm md:text-base text-gray-500 line-through"
                     >
-                      ${{ product.price + product.price * 0.2 }}
+                      ${{ (product.price + product.price * 0.2).toFixed(2) }}
                     </p>
                     <span
                       class="text-sm md:text-base text-red-500 bg-red-100 rounded-full px-2 py-1"
@@ -231,14 +231,17 @@
                     </div>
                     <div class="text-gray-500">5/5</div>
                   </div>
-                  <div class="flex items-center gap-2">
-                    <p class="mt-1 font-bold">
+                  <div class="flex items-center gap-2 justify-center flex-wrap">
+                    <p class="mt-1 text-sm md:text-base font-bold">
                       ${{ product.price.toFixed(2) }}
                     </p>
-                    <p class="mt-1 text-gray-500 line-through">
+                    <p
+                      class="mt-1 text-sm md:text-base text-gray-500 line-through"
+                    >
                       ${{ (product.price + product.price * 0.2).toFixed(2) }}
                     </p>
-                    <span class="text-red-500 bg-red-100 rounded-full px-2 py-1"
+                    <span
+                      class="text-sm md:text-base text-red-500 bg-red-100 rounded-full px-2 py-1"
                       >-20%</span
                     >
                   </div>

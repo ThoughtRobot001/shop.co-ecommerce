@@ -10,12 +10,14 @@
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-2"
         >
           <img
-            src="../assets/images/casual.png"
-            alt="Men's Fashion"
+            src="../assets/images/image_fx (14).jpg"
+            alt="Casual Fashion"
             class="w-full h-[300px] object-cover transition duration-300 group-hover:scale-110"
           />
-          <div class="absolute top-8 left-8 text-black text-4xl font-black">
-            Casual
+          <div
+            class="bg-white-200 absolute top-8 left-8 p-3 rounded-full shadow-lg"
+          >
+            <h1 class="text-black text-4xl font-black">Casual</h1>
           </div>
         </router-link>
         <router-link
@@ -23,12 +25,14 @@
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-3"
         >
           <img
-            src="../assets/images/formal.png"
-            alt="Women's Fashion"
-            class="wfull h-[300px] object-cover transition duration-300 group-hover:scale-110"
+            src="../assets/images/image_fx (16).jpg"
+            alt="Business Fashion"
+            class="w-full h-[300px] object-cover transition duration-300 group-hover:scale-110"
           />
-          <div class="absolute top-8 left-8 text-black text-4xl font-black">
-            Formal
+          <div
+            class="bg-white-200 absolute top-8 left-8 p-3 rounded-full shadow-lg"
+          >
+            <h1 class="text-black text-4xl font-black">Formal</h1>
           </div>
         </router-link>
         <router-link
@@ -36,12 +40,14 @@
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-3"
         >
           <img
-            src="../assets/images/party.png"
-            alt="Accessories"
+            src="../assets/images/image_fx (18).jpg"
+            alt="Party clothes"
             class="w-full h-[300px] object-cover transition duration-300 group-hover:scale-110"
           />
-          <div class="absolute top-8 left-8 text-black text-4xl font-black">
-            Party
+          <div
+            class="bg-white-200 absolute top-8 left-8 p-3 rounded-full shadow-lg"
+          >
+            <h1 class="text-black text-4xl font-black">Party</h1>
           </div>
         </router-link>
         <router-link
@@ -49,12 +55,14 @@
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-2"
         >
           <img
-            src="../assets/images/gym.png"
-            alt="Footwear"
+            src="../assets/images/image_fx (19).jpg"
+            alt="Gym wears"
             class="w-full h-[300px] object-cover transition duration-300 group-hover:scale-110"
           />
-          <div class="absolute top-8 left-8 text-black text-4xl font-black">
-            Gym
+          <div
+            class="bg-white-200 absolute top-8 left-8 p-3 rounded-full shadow-lg"
+          >
+            <h1 class="text-black text-4xl font-black">Gym</h1>
           </div>
         </router-link>
       </div>

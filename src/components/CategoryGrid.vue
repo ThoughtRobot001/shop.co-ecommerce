@@ -10,7 +10,7 @@
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-2"
         >
           <img
-            src="../assets/images/image_fx (14).jpg"
+            src="../assets/images/image_fx_(14).jpg"
             alt="Casual Fashion"
             class="w-full h-[300px] object-cover transition duration-300 group-hover:scale-110"
           />
@@ -25,7 +25,7 @@
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-3"
         >
           <img
-            src="../assets/images/image_fx (16).jpg"
+            src="../assets/images/image_fx_(16).jpg"
             alt="Business Fashion"
             class="w-full h-[300px] object-cover transition duration-300 group-hover:scale-110"
           />
@@ -40,7 +40,7 @@
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-3"
         >
           <img
-            src="../assets/images/image_fx (18).jpg"
+            src="../assets/images/image_fx_(18).jpg"
             alt="Party clothes"
             class="w-full h-[300px] object-cover transition duration-300 group-hover:scale-110"
           />
@@ -55,7 +55,7 @@
           class="relative overflow-hidden rounded-[20px] cursor-pointer group md:col-span-2"
         >
           <img
-            src="../assets/images/image_fx (19).jpg"
+            src="../assets/images/image_fx_(19).jpg"
             alt="Gym wears"
             class="w-full h-[300px] object-cover transition duration-300 group-hover:scale-110"
           />
